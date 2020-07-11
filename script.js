@@ -27,6 +27,9 @@ submitButton.addEventListener('click', ($event) => {
                     Delete entry
                 </button>
             </div>
+
+            <div class="card-footer text-muted">
+            </div>
         </div>
     `;
     postList.insertAdjacentHTML('afterbegin', blogPost);
