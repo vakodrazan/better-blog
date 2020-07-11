@@ -1,3 +1,4 @@
+// Set here all the given element that needed
 const postList = document.querySelector('#post-list');
 const postTitle = document.querySelector('.form-control#postTitle');
 const postContent = document.querySelector('.form-control[name="postContent"]');
@@ -7,7 +8,11 @@ const submitButton = document.querySelector(".btn.btn-primary");
 const form = document.querySelector('#post-form');
 const hideForm = document.querySelector("#show-form");
 
+// Set to today during the post creation
+const today = new Date();
+const date = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
 
+// Fuction for the new post
 const newPost = () => {
     const blogPost = `
         <div class="card">
@@ -30,6 +35,7 @@ const newPost = () => {
             </div>
 
             <div class="card-footer text-muted">
+            ${date}
             </div>
         </div>
     `;
@@ -37,20 +43,24 @@ const newPost = () => {
     postList.insertAdjacentHTML('afterbegin', blogPost);
 }
 
+// Create an event listener for the submit button
 submitButton.addEventListener('click', ($event) => {
     $event.preventDefault();
 
-    if (postContent.value.length >= 20) {
-        newPost();
-    } else {
-        postContent.classList.add("is-invalid");
-        blogPost[0].classList.add('invalid-feedback')
-    }
 
+
+    if (postContent.value.length < 20) {
+        postContent.classList.add("is-invalid");
+        blogPost[0].classList.add('invalid-feedback');
+    }
+    newPost(); 
 
     form.reset();
+
+
 });
 
+// Hide the form when click the hide button
 hideForm.addEventListener('click', ($event) => {
     $event.preventDefault()
     form.classList.add('hidden')
