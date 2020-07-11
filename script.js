@@ -7,8 +7,8 @@ const submitButton = document.querySelector(".btn.btn-primary");
 const form = document.querySelector('#post-form');
 const hideForm = document.querySelector("#show-form");
 
-submitButton.addEventListener('click', ($event) => {
-    $event.preventDefault();
+
+const newPost = () => {
     const blogPost = `
         <div class="card">
             <img
@@ -34,11 +34,20 @@ submitButton.addEventListener('click', ($event) => {
         </div>
     `;
 
-    if (postContent.value.length < 20) {
-        postContent.classList.add("is-invalid")
+    postList.insertAdjacentHTML('afterbegin', blogPost);
+}
+
+submitButton.addEventListener('click', ($event) => {
+    $event.preventDefault();
+
+    if (postContent.value.length >= 20) {
+        newPost();
+    } else {
+        postContent.classList.add("is-invalid");
+        blogPost[0].classList.add('invalid-feedback')
     }
 
-    postList.insertAdjacentHTML('afterbegin', blogPost);
+
     form.reset();
 });
 
