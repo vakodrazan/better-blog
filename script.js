@@ -41,6 +41,7 @@ const newPost = () => {
     `;
 
     postList.insertAdjacentHTML('afterbegin', blogPost);
+
 }
 
 // Create an event listener for the submit button
@@ -65,3 +66,13 @@ hideForm.addEventListener('click', ($event) => {
     $event.preventDefault()
     form.classList.add('hidden')
 });
+
+
+// for (let i = 0; i < delteButton.length; i++) {
+//     delteButton[i].addEventListener('click', ($event) => {
+//         $event.preventDefault()
+//         const deletCard = delteButton[i].parentElement.parentElement;
+//       deletCard.style.display = 'none'
+//     });
+// }
+
