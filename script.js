@@ -33,6 +33,11 @@ submitButton.addEventListener('click', ($event) => {
             </div>
         </div>
     `;
+
+    if (postContent.value.length < 20) {
+        postContent.classList.add("is-invalid")
+    }
+
     postList.insertAdjacentHTML('afterbegin', blogPost);
     form.reset();
 });
