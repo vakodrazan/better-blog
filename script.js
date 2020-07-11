@@ -4,7 +4,8 @@ const postContent = document.querySelector('.form-control[name="postContent"]');
 const author = document.querySelector('.form-control[name="postAuthor"]');
 const PostImage = document.querySelector('.form-control[name="postImg"]');
 const submitButton = document.querySelector(".btn.btn-primary");
-const form = document.querySelector('#post-form')
+const form = document.querySelector('#post-form');
+const hideForm = document.querySelector("#show-form");
 
 submitButton.addEventListener('click', ($event) => {
     $event.preventDefault();
@@ -34,4 +35,9 @@ submitButton.addEventListener('click', ($event) => {
     `;
     postList.insertAdjacentHTML('afterbegin', blogPost);
     form.reset();
+});
+
+hideForm.addEventListener('click', ($event) => {
+    $event.preventDefault()
+    form.classList.add('hidden')
 });
