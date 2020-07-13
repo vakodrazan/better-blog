@@ -6,7 +6,7 @@ const author = document.querySelector('.form-control[name="postAuthor"]');
 const PostImage = document.querySelector('.form-control[name="postImg"]');
 const submitButton = document.querySelector(".btn.btn-primary");
 const form = document.querySelector('#post-form');
-const hideForm = document.querySelector("#show-form");
+const showForm = document.querySelector("#show-form");
 
 // Set to today during the post creation
 const today = new Date();
@@ -33,7 +33,6 @@ const newPost = () => {
                     Delete entry
                 </button>
             </div>
-
             <div class="card-footer text-muted">
             ${date}
             </div>
@@ -48,23 +47,30 @@ const newPost = () => {
 submitButton.addEventListener('click', ($event) => {
     $event.preventDefault();
 
-
-
     if (postContent.value.split(' ').length < 20) {
         postContent.classList.add("is-invalid");
-        blogPost[0].classList.add('invalid-feedback');
-    }
+        blogPost.classList.add('invalid-feedback');
+    } else {
+        
     newPost(); 
 
     form.reset();
+        postContent.classList.remove("is-invalid");
+        blogPost.classList.remove('invalid-feedback');
+    }
 
 
 });
 
 // Hide the form when click the hide button
-hideForm.addEventListener('click', ($event) => {
-    $event.preventDefault()
-    form.classList.add('hidden')
+showForm.addEventListener('click', () => {
+    if (showForm.textContent === "Hide form") {
+        form.classList.add('hidden');
+        showForm.textContent = "Add a post";
+    } else {
+        form.classList.remove('hidden');
+        showForm.textContent = "Hide form";
+    }
 });
 
 
@@ -75,4 +81,3 @@ hideForm.addEventListener('click', ($event) => {
 //       deletCard.style.display = 'none'
 //     });
 // }
-
