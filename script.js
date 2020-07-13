@@ -1,83 +1,73 @@
-// Set here all the given element that needed
+const showForm = document.querySelector('#show-form');
+const formCard = document.querySelector('#form-card');
 const postList = document.querySelector('#post-list');
-const postTitle = document.querySelector('.form-control#postTitle');
-const postContent = document.querySelector('.form-control[name="postContent"]');
-const author = document.querySelector('.form-control[name="postAuthor"]');
-const PostImage = document.querySelector('.form-control[name="postImg"]');
-const submitButton = document.querySelector(".btn.btn-primary");
-const form = document.querySelector('#post-form');
-const showForm = document.querySelector("#show-form");
+const formElement = document.querySelector('#post-form');
+const textareaErrorMessage = document.querySelector('#error-message');
+const deleteBtns = document.querySelectorAll('.btn-delete');
 
-// Set to today during the post creation
-const today = new Date();
-const date = `${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`
+const toggleForm = () => {
+    if (formCard.classList.contains('hidden')) {
+        formCard.classList.remove('hidden');
+        showForm.textContent = 'Hide form';
+    } else {
+        formCard.classList.add('hidden');
+        showForm.textContent = 'Add a post';
+    }
+};
 
-// Fuction for the new post
-const newPost = () => {
-    const blogPost = `
+
+const createNewPost = (form) => {
+
+    const imgSrc = form.postImg.value;
+    const postTitle = form.postTitle.value;
+    const postAuthor = form.postAuthor.value;
+    const postContent = form.postContent.value;
+    const today = new Date();
+    // Create HTML element
+    return `
         <div class="card">
-            <img
-                class="card-img-top"
-                src="${PostImage.value}"
-                alt="Card image cap"
-                width = "500"
-                height = "200"
-            />
+            <img class="card-img-top" src="${imgSrc}" alt="beautiful random image"/>
             <div class="card-body">
-                <h5 class="card-title">
-                ${postTitle.value}
-                <small>by ${author.value}</small>
-                </h5>
-                <p class="card-text">${postContent.value}</p>
+                <h5 class="card-title">${postTitle} <small>by ${postAuthor}</small></h5>
+                <p class="card-text">${postContent}</p>
                 <button type="button" class="btn btn-sm btn-light btn-delete">
                     Delete entry
                 </button>
             </div>
             <div class="card-footer text-muted">
-            ${date}
+                ${today.toLocaleDateString()}
             </div>
         </div>
     `;
+};
 
-    postList.insertAdjacentHTML('afterbegin', blogPost);
 
-}
+const handleSubmit = (e) => {
+    e.preventDefault();
 
-// Create an event listener for the submit button
-submitButton.addEventListener('click', ($event) => {
-    $event.preventDefault();
-
-    if (postContent.value.split(' ').length < 20) {
-        postContent.classList.add("is-invalid");
-        blogPost.classList.add('invalid-feedback');
+    const form = e.target;
+    const postContent = form.postContent;
+    const wordsLength = postContent.value.split(' ').length;
+    if (wordsLength < 20) {
+        postContent.classList.add('is-invalid');
+        textareaErrorMessage.classList.remove('hidden');
     } else {
-        
-    newPost(); 
 
+        const newPost = createNewPost(form);
+        postList.insertAdjacentHTML('afterbegin', newPost);
+        postContent.classList.remove('is-invalid');
+        textareaErrorMessage.classList.add('hidden');
+    }
     form.reset();
-        postContent.classList.remove("is-invalid");
-        blogPost.classList.remove('invalid-feedback');
+};
+
+formElement.addEventListener('submit', handleSubmit);
+const handleDelete = (e) => {
+    if (e.target.classList.contains('btn-delete')) {
+        const deleteBtn = e.target;
+        deleteBtn.closest('.card').remove();
     }
+};
 
-
-});
-
-// Hide the form when click the hide button
-showForm.addEventListener('click', () => {
-    if (showForm.textContent === "Hide form") {
-        form.classList.add('hidden');
-        showForm.textContent = "Add a post";
-    } else {
-        form.classList.remove('hidden');
-        showForm.textContent = "Hide form";
-    }
-});
-
-
-// for (let i = 0; i < delteButton.length; i++) {
-//     delteButton[i].addEventListener('click', ($event) => {
-//         $event.preventDefault()
-//         const deletCard = delteButton[i].parentElement.parentElement;
-//       deletCard.style.display = 'none'
-//     });
-// }
+showForm.addEventListener('click', toggleForm);
+document.addEventListener('click', handleDelete);
