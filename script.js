@@ -50,7 +50,7 @@ submitButton.addEventListener('click', ($event) => {
 
 
 
-    if (postContent.value.length < 20) {
+    if (postContent.value.split(' ').length < 20) {
         postContent.classList.add("is-invalid");
         blogPost[0].classList.add('invalid-feedback');
     }
